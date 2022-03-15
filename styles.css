@@ -1,0 +1,159 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;1,100;1,200&display=swap");
+.plus {
+  grid-area: a;
+}
+
+.minus {
+  grid-area: b;
+}
+
+.times {
+  grid-area: c;
+}
+
+.divide {
+  grid-area: d;
+}
+
+.one {
+  grid-area: l;
+}
+
+.two {
+  grid-area: m;
+}
+
+.three {
+  grid-area: n;
+}
+
+.four {
+  grid-area: i;
+}
+
+.five {
+  grid-area: j;
+}
+
+.six {
+  grid-area: k;
+}
+
+.seven {
+  grid-area: e;
+}
+
+.eight {
+  grid-area: f;
+}
+
+.nine {
+  grid-area: g;
+}
+
+.zero {
+  grid-area: o;
+}
+
+.decimal {
+  grid-area: p;
+}
+
+.clear {
+  grid-area: q;
+}
+
+.equal {
+  grid-area: h;
+}
+
+html {
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  width: 90vw;
+  height: 90vh;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.calc {
+  height: 800px;
+  width: 400px;
+  border-radius: 30px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 300px 1fr;
+  font-size: 2rem;
+  font-weight: 200;
+}
+.calc__display {
+  font-size: 3rem;
+  padding: 30px;
+  background-color: #1e1e32;
+  color: white;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.calc__keys {
+  display: grid;
+  grid-template-areas: "a b c d" "e f g h" "i j k h" "l m n h" "o p q h";
+}
+.calc__keys * {
+  font-size: inherit;
+  font-family: inherit;
+}
+.calc__keys .operator,
+.calc__keys .number {
+  border: none;
+  box-shadow: 2px 2px rgba(255, 255, 255, 0.2) inset, -2px -2px rgba(0, 0, 0, 0.02);
+  position: relative;
+}
+.calc__keys .operator:active,
+.calc__keys .number:active {
+  box-shadow: 9px 9px 25px rgba(0, 0, 0, 0.15) inset;
+}
+.calc__keys .operator::before,
+.calc__keys .number::before {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: calc(50% - 25px);
+  left: calc(50% - 25px);
+  border-radius: 50%;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3), -10px -10px 20px rgba(255, 255, 255, 0.7);
+}
+.calc__keys .operator {
+  background-color: #d2d2d2;
+}
+.calc__keys .operator.pressed::before {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: calc(50% - 25px);
+  left: calc(50% - 25px);
+  border-radius: 50%;
+  box-shadow: -10px -10px 20px rgba(0, 0, 0, 0.3), 10px 10px 20px rgba(255, 255, 255, 0.7);
+}
+.calc__keys .number {
+  background-color: #f0f0f0;
+}
+.calc__keys .number.equal {
+  background-color: orange;
+  border-bottom-right-radius: 30px;
+}
+.calc__keys .number.zero {
+  border-bottom-left-radius: 30px;
+}

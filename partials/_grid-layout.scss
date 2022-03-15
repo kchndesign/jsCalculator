@@ -1,0 +1,89 @@
+.plus {
+    grid-area: a;
+}
+
+.minus {
+    grid-area: b;
+}
+
+.times {
+    grid-area: c;
+}
+
+.divide {
+    grid-area: d;
+}
+
+.one {
+    grid-area: l;
+}
+
+.two {
+    grid-area: m;
+}
+
+.three {
+    grid-area: n;
+}
+
+.four {
+    grid-area: i;
+}
+
+.five {
+    grid-area: j;
+}
+
+.six {
+    grid-area: k;
+}
+
+.seven {
+    grid-area: e;
+}
+
+.eight {
+    grid-area: f;
+}
+
+.nine {
+    grid-area: g;
+}
+
+.zero {
+    grid-area: o;
+}
+
+.decimal {
+    grid-area: p;
+}
+
+.clear {
+    grid-area: q;
+}
+
+.equal {
+    grid-area: h;
+}
+
+// $numbers: (
+//     one,
+//     two,
+//     three,
+//     four,
+//     five,
+//     six,
+//     seven,
+//     eight,
+//     nine,
+//     zero,
+//     decimal,
+//     clear,
+//     equal
+// );
+
+// @each $number in $numbers {
+//     .#{$number} {
+//         grid-area: 1;
+//     }
+// }

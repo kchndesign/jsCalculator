@@ -1,0 +1,117 @@
+@use './partials/index' as *;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    width: 90vw;
+    height: 90vh;
+    justify-content: center;
+    align-items: center;
+
+    background-color: black;
+}
+
+.calc {
+    height: $height;
+    width: $width;
+    border-radius: $radius;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 300px 1fr;
+
+    font-size: 2rem;
+    font-weight: 200;
+
+    &__display {
+        font-size: 3rem;
+        padding: 30px;
+        background-color: $display-color;
+        color: white;
+
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+    }
+
+    &__keys {
+        display: grid;
+        grid-template-areas:
+            'a b c d'
+            'e f g h'
+            'i j k h'
+            'l m n h'
+            'o p q h';
+
+        * {
+            font-size: inherit;
+            font-family: inherit;
+        }
+
+        .operator,
+        .number {
+            border: none;
+
+            box-shadow: $shadow;
+            position: relative;
+
+            &:active {
+                box-shadow: $hover-shadow;
+            }
+
+            &::before {
+                content: '';
+                position: absolute;
+
+                width: $dot-size;
+                height: $dot-size;
+
+                top: calc(50% - ($dot-size / 2));
+                left: calc(50% - ($dot-size / 2));
+
+                border-radius: 50%;
+
+                box-shadow: $neu-shadow;
+            }
+        }
+
+        .operator {
+            background-color: $operator-colors;
+
+            &.pressed {
+                &::before {
+                    content: '';
+                    position: absolute;
+
+                    width: $dot-size;
+                    height: $dot-size;
+
+                    top: calc(50% - ($dot-size / 2));
+                    left: calc(50% - ($dot-size / 2));
+
+                    border-radius: 50%;
+
+                    box-shadow: $neu-shadow-reversed;
+                }
+            }
+        }
+
+        .number {
+            background-color: $number-colors;
+
+            &.equal {
+                background-color: $accent-color;
+                border-bottom-right-radius: 30px;
+            }
+
+            &.zero {
+                border-bottom-left-radius: $radius;
+            }
+        }
+    }
+}
