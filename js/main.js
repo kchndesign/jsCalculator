@@ -1,3 +1,5 @@
+import { evaluateExpression } from './modules/evaluateExpression';
+
 // get all of the reused elements
 const keys = document.querySelector('.calc__keys');
 const calc = document.querySelector('.calc');
@@ -43,46 +45,57 @@ function writeToScreen(string, replace = false, newline = false) {
 //          this one has been pressed
 
 function keyPress(event) {
-    const targetKey = event.target;
-    const targetClass = event.target.classList;
+    const key = event.target;
+    const keyType = key.dataset.buttonType;
     const calcState = calc.dataset;
 
-    //  if operator is pressed
-    if (targetClass.contains('operator')) {
-        // clean state meaning no inputs yet
-        if (calcState.clean == 'true') {
-            return;
-        }
+    switch (keyType) {
+        case 'operator':
+            // clean state meaning no inputs yet
+            if (calcState.clean == 'true') {
+                break;
+            }
 
-        calcState.currentOperator == 'none'
-            ? writeToScreen(targetKey.textContent)
-            : writeToScreen(targetKey.textContent, true);
+            calcState.currentOperator == 'none'
+                ? writeToScreen(key.textContent)
+                : writeToScreen(key.textContent, true);
 
-        // set currentOperator to the pressed key
-        calcState.currentOperator = targetKey.textContent;
-        return;
-    }
+            // set currentOperator to the pressed key
+            calcState.currentOperator = key.textContent;
+            break;
+        case 'number':
+            calcState.clean == 'true'
+                ? writeToScreen(key.textContent, true)
+                : writeToScreen(key.textContent);
 
-    // if number is pressed
-    if (targetClass.contains('number')) {
-        calcState.clean == 'true'
-            ? writeToScreen(targetKey.textContent, true)
-            : writeToScreen(targetKey.textContent);
+            calcState.clean = 'false';
+            calcState.currentOperator = 'none';
 
-        calcState.clean = 'false';
-        calcState.currentOperator = 'none';
+            break;
+        case 'decimal':
+            if (calcState.decimal == 'true') {
+                break;
+            }
 
-        return;
-    }
-
-    // if equals is pressed
-    if (targetClass.contains('equal')) {
-        const lineArr = document.querySelectorAll('.display__text');
-        const textArr = [];
-        lineArr.forEach((elem) => {
-            textArr.push(elem.textContent);
-        });
-        console.log(textArr);
+            writeToScreen(key.textContent);
+            calcState.clean = 'false';
+            calcState.currentOperator = 'none';
+            calcState.decimal = 'true';
+            break;
+        case 'equal':
+            const lineArr = document.querySelectorAll('.display__text');
+            const textArr = [];
+            lineArr.forEach((elem) => {
+                textArr.push(elem.textContent);
+            });
+            console.log(textArr);
+            try {
+                let currentExpr = getCurrentExpr(textArr);
+                let operatorsArray = convertToNumbers(currentExpr);
+                let result = evaluateExpression(operatorsArray);
+                writeToScreen(result, false, true);
+            } catch {}
+            break;
         // let currentExpr = getCurrentExpr(textArr);
         // let finalExpr = convertToNumbers();
         // let result = evaluateNumbers();

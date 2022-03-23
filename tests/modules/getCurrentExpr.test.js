@@ -1,34 +1,35 @@
 const { describe, expect, beforeEach, it } = require('@jest/globals');
-// const { getCurrentExpr } = import('../../js/modules/getCurrentExpr');
 
 import { getCurrentExpr } from '../../js/modules/getCurrentExpr';
 
-// const { getCurrentExpr } = thisThing;
-
-// const { getCurrentExpr } = ('../../js/modules/getCurrentExpr');
-
 let validArrStrings = ['12348', '3245×587'];
-let invalidArrStrings = ['hello', 123];
+let invalidArrStrings = 'this that';
 let usesPrevResult = ['300', '×400'];
 
-describe('Testing getCurrentExpr() function.', () => {
-    test('should return defined input', () => {
+describe('getCurrentExpr() function.', () => {
+    test('should return defined output', () => {
         expect(getCurrentExpr(validArrStrings)).toBeDefined;
     });
 
-    test('should reject bad inputs', () => {
-        expect(getCurrentExpr(invalidArrStrings)).toThrow();
+    test('should reject non-array inputs', () => {
+        expect(() => {
+            getCurrentExpr(invalidArrStrings);
+        }).toThrow();
     });
 
-    test('should return a string', () => {
+    test('should return a string when given valid input', () => {
         expect(typeof getCurrentExpr(validArrStrings)).toBe('string');
     });
 
     test('should return the correct value', () => {
-        expect(getCurrentExpr(validArrStrings)).stringMatching('3245×587');
+        expect(getCurrentExpr(validArrStrings)).toEqual(
+            expect.stringMatching('3245×587'),
+        );
     });
 
     test('should include previous result if first char of the current string is an operator', () => {
-        expect(getCurrentExpr(usesPrevResult)).stringMatching('300×400');
+        expect(getCurrentExpr(usesPrevResult)).toEqual(
+            expect.stringMatching('300×400'),
+        );
     });
 });
