@@ -63,11 +63,15 @@ body {
         }
 
         .operator,
-        .number {
+        .number,
+        .equal,
+        .clear {
             border: none;
 
             box-shadow: $shadow;
             position: relative;
+
+            cursor: pointer;
 
             &:active {
                 box-shadow: $hover-shadow;
@@ -113,14 +117,14 @@ body {
         .number {
             background-color: $number-colors;
 
-            &.equal {
-                background-color: $accent-color;
-                border-bottom-right-radius: 30px;
-            }
-
             &.zero {
                 border-bottom-left-radius: $radius;
             }
+        }
+
+        .equal {
+            background-color: $accent-color;
+            border-bottom-right-radius: 30px;
         }
     }
 }
