@@ -70,7 +70,7 @@ const convertToNumbers2 = (string) => {
 const convertToNumbers = (string) => {
     // test if there are any letters or invalid chars
     if (
-        /[^0-9×÷\-\+]/.test(string) ||
+        /[^0-9×÷\-\+.]/.test(string) ||
         string == '' ||
         typeof string != 'string'
     ) {

@@ -20,7 +20,6 @@ function writeToScreen(string, replace = false, newline = false) {
     const lastLine = lineArr[lineArr.length - 1];
 
     if (newline) {
-        // lineArr[0].remove();
         display.innerHTML = `<p class="display__text display__text--subtext">${string}</p> <p class="display__text">0</p>`;
     } else if (lastLine.textContent === '0') {
         lastLine.textContent = string;
