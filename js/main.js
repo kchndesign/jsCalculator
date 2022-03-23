@@ -64,6 +64,7 @@ function keyPress(event) {
 
             // set currentOperator to the pressed key
             calcState.currentOperator = key.textContent;
+            calcState.decimal = 'false';
             break;
         case 'number':
             calcState.clean == 'true'
@@ -72,7 +73,7 @@ function keyPress(event) {
 
             calcState.clean = 'false';
             calcState.currentOperator = 'none';
-
+            calcState.decimal = 'false';
             break;
         case 'decimal':
             if (calcState.decimal == 'true') {
@@ -100,6 +101,8 @@ function keyPress(event) {
             } catch (error) {
                 console.error(error);
             }
+            calcState.currentOperator = 'none';
+            calcState.decimal = 'false';
             break;
         // let currentExpr = getCurrentExpr(textArr);
         // let finalExpr = convertToNumbers();

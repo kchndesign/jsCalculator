@@ -12,7 +12,7 @@ const getCurrentExpr = (inputArr) => {
 
     let lastItem = inputArr[inputArr.length - 1];
 
-    if (/[0-9]/.test(lastItem.charAt(0))) {
+    if (/[0-9.]/.test(lastItem.charAt(0))) {
         return lastItem;
     } else {
         return inputArr.join('');
