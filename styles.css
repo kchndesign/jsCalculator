@@ -97,13 +97,20 @@ body {
   font-weight: 200;
 }
 .calc__display {
-  font-size: 3rem;
   padding: 30px;
   background-color: #1e1e32;
-  color: white;
   display: flex;
+  flex-direction: column;
   align-items: flex-end;
   justify-content: flex-end;
+}
+.calc__display .display__text {
+  font-size: 3rem;
+  color: white;
+}
+.calc__display .display__text--subtext {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.6);
 }
 .calc__keys {
   display: grid;
