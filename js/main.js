@@ -1,4 +1,8 @@
-import { evaluateExpression } from './modules/evaluateExpression';
+import { evaluateExpression } from './modules/evaluateExpression.js';
+
+import { getCurrentExpr } from './modules/getCurrentExpr.js';
+
+import { convertToNumbers } from './modules/convertToNumbers.js';
 
 // get all of the reused elements
 const keys = document.querySelector('.calc__keys');
@@ -16,9 +20,8 @@ function writeToScreen(string, replace = false, newline = false) {
     const lastLine = lineArr[lineArr.length - 1];
 
     if (newline) {
-        lastLine.classList.add('display__text--subtext');
-        lineArr[1].remove();
-        display.innerHTML += `<p class="display__text">${string}</p>`;
+        // lineArr[0].remove();
+        display.innerHTML = `<p class="display__text display__text--subtext">${string}</p> <p class="display__text">0</p>`;
     } else if (lastLine.textContent === '0') {
         lastLine.textContent = string;
     } else if (replace) {
@@ -93,8 +96,11 @@ function keyPress(event) {
                 let currentExpr = getCurrentExpr(textArr);
                 let operatorsArray = convertToNumbers(currentExpr);
                 let result = evaluateExpression(operatorsArray);
+                console.log('writing to sr');
                 writeToScreen(result, false, true);
-            } catch {}
+            } catch (error) {
+                console.error(error);
+            }
             break;
         // let currentExpr = getCurrentExpr(textArr);
         // let finalExpr = convertToNumbers();
