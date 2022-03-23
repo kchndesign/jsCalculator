@@ -97,13 +97,20 @@ body {
   font-weight: 200;
 }
 .calc__display {
-  font-size: 3rem;
   padding: 30px;
   background-color: #1e1e32;
-  color: white;
   display: flex;
+  flex-direction: column;
   align-items: flex-end;
   justify-content: flex-end;
+}
+.calc__display .display__text {
+  font-size: 3rem;
+  color: white;
+}
+.calc__display .display__text--subtext {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.6);
 }
 .calc__keys {
   display: grid;
@@ -114,17 +121,24 @@ body {
   font-family: inherit;
 }
 .calc__keys .operator,
-.calc__keys .number {
+.calc__keys .number,
+.calc__keys .equal,
+.calc__keys .clear {
   border: none;
   box-shadow: 2px 2px rgba(255, 255, 255, 0.2) inset, -2px -2px rgba(0, 0, 0, 0.02);
   position: relative;
+  cursor: pointer;
 }
 .calc__keys .operator:active,
-.calc__keys .number:active {
+.calc__keys .number:active,
+.calc__keys .equal:active,
+.calc__keys .clear:active {
   box-shadow: 9px 9px 25px rgba(0, 0, 0, 0.15) inset;
 }
 .calc__keys .operator::before,
-.calc__keys .number::before {
+.calc__keys .number::before,
+.calc__keys .equal::before,
+.calc__keys .clear::before {
   content: "";
   position: absolute;
   width: 50px;
@@ -150,10 +164,10 @@ body {
 .calc__keys .number {
   background-color: #f0f0f0;
 }
-.calc__keys .number.equal {
-  background-color: orange;
-  border-bottom-right-radius: 30px;
-}
 .calc__keys .number.zero {
   border-bottom-left-radius: 30px;
+}
+.calc__keys .equal {
+  background-color: orange;
+  border-bottom-right-radius: 30px;
 }

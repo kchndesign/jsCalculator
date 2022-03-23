@@ -29,14 +29,23 @@ body {
     font-weight: 200;
 
     &__display {
-        font-size: 3rem;
         padding: 30px;
         background-color: $display-color;
-        color: white;
 
         display: flex;
+        flex-direction: column;
         align-items: flex-end;
         justify-content: flex-end;
+
+        .display__text {
+            font-size: 3rem;
+            color: white;
+
+            &--subtext {
+                font-size: 2rem;
+                color: rgba(white, 0.6);
+            }
+        }
     }
 
     &__keys {
@@ -54,11 +63,15 @@ body {
         }
 
         .operator,
-        .number {
+        .number,
+        .equal,
+        .clear {
             border: none;
 
             box-shadow: $shadow;
             position: relative;
+
+            cursor: pointer;
 
             &:active {
                 box-shadow: $hover-shadow;
@@ -104,14 +117,14 @@ body {
         .number {
             background-color: $number-colors;
 
-            &.equal {
-                background-color: $accent-color;
-                border-bottom-right-radius: 30px;
-            }
-
             &.zero {
                 border-bottom-left-radius: $radius;
             }
+        }
+
+        .equal {
+            background-color: $accent-color;
+            border-bottom-right-radius: 30px;
         }
     }
 }
