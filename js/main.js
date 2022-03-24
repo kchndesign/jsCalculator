@@ -35,6 +35,11 @@ function writeToScreen(string, replace = false, newline = false) {
     return lineArr;
 }
 
+// polls the various elements of the document to get the state
+// of the calculator.
+
+function getCalculatorState() {}
+
 // gets the key that is pressed and
 // decides what to do.
 //
@@ -60,6 +65,7 @@ function keyPress(event) {
             // set currentOperator to the pressed key
             calcState.currentOperator = key.textContent;
             calcState.decimal = 'false';
+            calcState.waitingForReplacement = 'false';
             break;
         case 'number':
             calcState.clean == 'true'
@@ -81,7 +87,8 @@ function keyPress(event) {
             calcState.decimal = 'true';
             break;
         case 'equal':
-            const lineArr = document.querySelectorAll('.display__text');
+            const lineArr =
+                document.querySelectorAll('.display__text');
             const textArr = [];
             lineArr.forEach((elem) => {
                 textArr.push(elem.textContent);
@@ -98,6 +105,8 @@ function keyPress(event) {
             }
             calcState.currentOperator = 'none';
             calcState.decimal = 'false';
+            calcState.hasResult = 'true';
+            calcState.waitingForReplacement = 'true';
             break;
         case 'clear':
             writeToScreen('', false, true);
