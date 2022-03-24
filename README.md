@@ -1,7 +1,7 @@
-# Javascript Calculator
+# Neuemorphic Javascript Calculator
 
 This project is a simple calculator written in vanilla Javascript. It
-has a 'neumorphic' style interface made with HTML/SCSS. It takes some
+has a 'neuemorphic' style interface made with HTML/SCSS. It takes some
 design inspiration from the Teenage Engineering OP-1.
 
 <!-- You can find this hosted at kchn.com.au/jscalculator -->
@@ -11,6 +11,12 @@ design inspiration from the Teenage Engineering OP-1.
 ## **Contents**
 
 -   ## [Project Brief](#project-brief-1)
+
+-   ## [Design](#design-1)
+
+-   ## [Technical Implementation](#technical-implementation-1)
+
+-   ## [Project Reflection](#project-reflection-1)
 
 ---
 
@@ -61,7 +67,8 @@ Engineering.
 
 ![Photo of the Teenage Engineering OP-1, pictured in the middle.](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/CNCD_Berlin_session_2019_%282019-04-27_13.52.18_by_Ville_Hyv%C3%B6nen%29.jpg/800px-CNCD_Berlin_session_2019_%282019-04-27_13.52.18_by_Ville_Hyv%C3%B6nen%29.jpg)
 
-_The Teenage Engineering OP-1 pictured in the middle._
+_The Teenage Engineering OP-1 pictured in the middle. From Ville
+Hyvönen on Wikimedia Commons._
 
 ## Technical Implementation
 

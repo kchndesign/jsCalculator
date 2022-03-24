@@ -1,5 +1,6 @@
 {
     "workbench.settings.editor": "json",
     "prettier.htmlWhitespaceSensitivity": "strict",
-    "prettier.printWidth": 70
+    "prettier.printWidth": 70,
+    "prettier.singleQuote": true
 }
