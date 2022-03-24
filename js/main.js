@@ -40,21 +40,6 @@ function writeToScreen(string, replace = false, newline = false) {
 //
 // this uses the dataset functionality which is
 // bound to the calc div. See readme for details.
-//
-// data-current-operator:
-//      none: no operator has been pressed
-//      plus, minus, times, divide:
-//          this one has been pressed
-//
-// data-button-type: which type of button
-//      was pressed. Important for logical
-//      operations
-//
-// data-clean: true or false
-//      This is useful so we know when to
-//      accept certain inputs e.g reject
-//      operator presses when there is no
-//      previous result.
 
 function keyPress(event) {
     const key = event.target;
