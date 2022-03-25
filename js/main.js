@@ -20,7 +20,7 @@ function writeToScreen(string, replace = false, newline = false) {
     const lastLine = lineArr[lineArr.length - 1];
 
     if (newline) {
-        display.innerHTML = `<p class="display__text display__text--subtext">${string}</p> <p class="display__text">0</p>`;
+        display.innerHTML = `<p class="display__text display__text--subtext">${string}</p> <p class="display__text display__text--main-text">0</p>`;
     } else if (lastLine.textContent === '') {
         lastLine.textContent = string;
     } else if (replace) {
@@ -35,56 +35,105 @@ function writeToScreen(string, replace = false, newline = false) {
     return lineArr;
 }
 
-// polls the various elements of the document to get the state
-// of the calculator.
+// This is the state object for the calculator.
+// the getCalcState() function polls the html
+// document to determine the current state of the
+// calculator.
 
-function getCalculatorState() {}
+let calcState = {
+    // get the last character in the last line of the display
+    // see if its an operator or not
+    lastKeyIsOperator: false,
+    hasPreviousResult: false,
+    isOnly0: true,
+    hasDecimal: false,
+    getCalcState: function () {
+        const lineArr = document.querySelectorAll('.display__text');
+        const firstLineContent = lineArr[0].textContent;
+        const lastLineContent =
+            lineArr[lineArr.length - 1].textContent;
+        let lastLineCharacterArray = [...lastLineContent];
+        // lastKeyisOperator
+        let lastChar = lastLineCharacterArray.pop();
+        this.lastKeyIsOperator = !/[0-9]/.test(lastChar);
+        lastLineCharacterArray.push(lastChar);
+        // hasPreviousResult
+        this.hasPreviousResult = firstLineContent ? true : false;
+        // is only0
+        this.isOnly0 = lastLineContent === '0' ? true : false;
+        // hasDecimal
+        for (let i = lastLineCharacterArray.length - 1; i >= 0; i--) {
+            let character = lastLineCharacterArray[i];
+            if (/[0-9.]/.test(character)) {
+                return;
+            } else if (/[×÷\-\+]/.test(character)) {
+                this.hasDecimal = false;
+                break;
+            } else if (/./.test(character)) {
+                this.hasDecimal = true;
+                break;
+            }
+        }
+    },
+    [Symbol.iterator]: function* () {
+        yield this.lastKeyIsOperator;
+        yield this.hasPreviousResult;
+        yield this.isOnly0;
+        yield this.hasDecimal;
+    },
+};
 
-// gets the key that is pressed and
-// decides what to do.
-//
-// this uses the dataset functionality which is
-// bound to the calc div. See readme for details.
+// this new implementation uses an object
+// called calcState to control interaction logic.
+// The calcState object holds a set of bools that
+// the event handler needs to figure out what to do.
+// AFTER a key is pressed, it calls getCalcState()
+// which resets the object booleans.
+// this avoids the brain-breaking task of
+// manually managing the state of the calculator.
 
 function keyPress(event) {
-    const key = event.target;
-    const keyType = key.dataset.buttonType;
-    const calcState = calc.dataset;
+    const keyText = event.target.textContent;
+    const keyType = event.target.dataset.buttonType;
 
     switch (keyType) {
         case 'operator':
-            // clean state meaning no inputs yet
-            if (calcState.clean == 'true') {
+            // if calculator is in clean state: no previous result and no previous input dont allow input
+            if (!calcState.hasPreviousResult && calcState.isOnly0) {
                 break;
             }
-
-            calcState.currentOperator == 'none'
-                ? writeToScreen(key.textContent)
-                : writeToScreen(key.textContent, true);
-
-            // set currentOperator to the pressed key
-            calcState.currentOperator = key.textContent;
-            calcState.decimal = 'false';
-            calcState.waitingForReplacement = 'false';
+            // if the last character is an operator, replace it
+            // or if its just zero, you can replace it too
+            else if (
+                calcState.lastKeyIsOperator ||
+                calcState.isOnly0
+            ) {
+                writeToScreen(keyText, true);
+            }
+            // all other cases:
+            else {
+                writeToScreen(keyText);
+            }
+            calcState.getCalcState();
             break;
         case 'number':
-            calcState.clean == 'true'
-                ? writeToScreen(key.textContent, true)
-                : writeToScreen(key.textContent);
-
-            calcState.clean = 'false';
-            calcState.currentOperator = 'none';
-            calcState.decimal = 'false';
+            // if theres just a zero in the input <p> tag
+            if (calcState.isOnly0) {
+                writeToScreen(keyText, true);
+            } else {
+                writeToScreen(keyText);
+            }
+            calcState.getCalcState();
             break;
         case 'decimal':
-            if (calcState.decimal == 'true') {
+            // dont allow decimals if there is already a decimal in the
+            // current number
+            if (calcState.hasDecimal) {
                 break;
+            } else {
+                writeToScreen(keyText);
             }
-
-            writeToScreen(key.textContent);
-            calcState.clean = 'false';
-            calcState.currentOperator = 'none';
-            calcState.decimal = 'true';
+            calcState.getCalcState();
             break;
         case 'equal':
             const lineArr =
@@ -98,23 +147,94 @@ function keyPress(event) {
                 let currentExpr = getCurrentExpr(textArr);
                 let operatorsArray = convertToNumbers(currentExpr);
                 let result = evaluateExpression(operatorsArray);
-                console.log('writing to sr');
                 writeToScreen(result, false, true);
             } catch (error) {
                 console.error(error);
             }
-            calcState.currentOperator = 'none';
-            calcState.decimal = 'false';
-            calcState.hasResult = 'true';
-            calcState.waitingForReplacement = 'true';
+            calcState.getCalcState();
             break;
         case 'clear':
             writeToScreen('', false, true);
-            calcState.currentOperator = 'none';
-            calcState.decimal = 'false';
-            calcState.clean = 'true';
+            calcState.getCalcState();
+            break;
     }
 }
+
+// gets the key that is pressed and
+// decides what to do.
+//
+// this uses the dataset functionality which is
+// bound to the calc div. See readme for details.
+
+// function keyPress(event) {
+//     const key = event.target;
+//     const keyType = key.dataset.buttonType;
+//     const calcState = calc.dataset;
+
+//     switch (keyType) {
+//         case 'operator':
+//             // clean state meaning no inputs yet
+//             if (calcState.clean == 'true') {
+//                 break;
+//             }
+
+//             calcState.currentOperator == 'none'
+//                 ? writeToScreen(key.textContent)
+//                 : writeToScreen(key.textContent, true);
+
+//             // set currentOperator to the pressed key
+//             calcState.currentOperator = key.textContent;
+//             calcState.decimal = 'false';
+//             calcState.waitingForReplacement = 'false';
+//             break;
+//         case 'number':
+//             calcState.clean == 'true'
+//                 ? writeToScreen(key.textContent, true)
+//                 : writeToScreen(key.textContent);
+
+//             calcState.clean = 'false';
+//             calcState.currentOperator = 'none';
+//             calcState.decimal = 'false';
+//             break;
+//         case 'decimal':
+//             if (calcState.decimal == 'true') {
+//                 break;
+//             }
+
+//             writeToScreen(key.textContent);
+//             calcState.clean = 'false';
+//             calcState.currentOperator = 'none';
+//             calcState.decimal = 'true';
+//             break;
+//         case 'equal':
+//             const lineArr =
+//                 document.querySelectorAll('.display__text');
+//             const textArr = [];
+//             lineArr.forEach((elem) => {
+//                 textArr.push(elem.textContent);
+//             });
+//             console.log(textArr);
+//             try {
+//                 let currentExpr = getCurrentExpr(textArr);
+//                 let operatorsArray = convertToNumbers(currentExpr);
+//                 let result = evaluateExpression(operatorsArray);
+//                 console.log('writing to sr');
+//                 writeToScreen(result, false, true);
+//             } catch (error) {
+//                 console.error(error);
+//             }
+//             calcState.currentOperator = 'none';
+//             calcState.decimal = 'false';
+//             calcState.hasResult = 'true';
+//             calcState.waitingForReplacement = 'true';
+//             break;
+//         case 'clear':
+//             writeToScreen('', false, true);
+//             calcState.currentOperator = 'none';
+//             calcState.decimal = 'false';
+//             calcState.clean = 'true';
+//     }
+// }
 
 // adds event listener to the keys
 function generateEventListeners() {
