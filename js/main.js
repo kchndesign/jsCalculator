@@ -145,8 +145,11 @@ function keyPress(event) {
             console.log(textArr);
             try {
                 let currentExpr = getCurrentExpr(textArr);
+                console.log(currentExpr);
                 let operatorsArray = convertToNumbers(currentExpr);
+                console.log(operatorsArray);
                 let result = evaluateExpression(operatorsArray);
+                console.log(result);
                 writeToScreen(result, false, true);
             } catch (error) {
                 console.error(error);
@@ -159,82 +162,6 @@ function keyPress(event) {
             break;
     }
 }
-
-// gets the key that is pressed and
-// decides what to do.
-//
-// this uses the dataset functionality which is
-// bound to the calc div. See readme for details.
-
-// function keyPress(event) {
-//     const key = event.target;
-//     const keyType = key.dataset.buttonType;
-//     const calcState = calc.dataset;
-
-//     switch (keyType) {
-//         case 'operator':
-//             // clean state meaning no inputs yet
-//             if (calcState.clean == 'true') {
-//                 break;
-//             }
-
-//             calcState.currentOperator == 'none'
-//                 ? writeToScreen(key.textContent)
-//                 : writeToScreen(key.textContent, true);
-
-//             // set currentOperator to the pressed key
-//             calcState.currentOperator = key.textContent;
-//             calcState.decimal = 'false';
-//             calcState.waitingForReplacement = 'false';
-//             break;
-//         case 'number':
-//             calcState.clean == 'true'
-//                 ? writeToScreen(key.textContent, true)
-//                 : writeToScreen(key.textContent);
-
-//             calcState.clean = 'false';
-//             calcState.currentOperator = 'none';
-//             calcState.decimal = 'false';
-//             break;
-//         case 'decimal':
-//             if (calcState.decimal == 'true') {
-//                 break;
-//             }
-
-//             writeToScreen(key.textContent);
-//             calcState.clean = 'false';
-//             calcState.currentOperator = 'none';
-//             calcState.decimal = 'true';
-//             break;
-//         case 'equal':
-//             const lineArr =
-//                 document.querySelectorAll('.display__text');
-//             const textArr = [];
-//             lineArr.forEach((elem) => {
-//                 textArr.push(elem.textContent);
-//             });
-//             console.log(textArr);
-//             try {
-//                 let currentExpr = getCurrentExpr(textArr);
-//                 let operatorsArray = convertToNumbers(currentExpr);
-//                 let result = evaluateExpression(operatorsArray);
-//                 console.log('writing to sr');
-//                 writeToScreen(result, false, true);
-//             } catch (error) {
-//                 console.error(error);
-//             }
-//             calcState.currentOperator = 'none';
-//             calcState.decimal = 'false';
-//             calcState.hasResult = 'true';
-//             calcState.waitingForReplacement = 'true';
-//             break;
-//         case 'clear':
-//             writeToScreen('', false, true);
-//             calcState.currentOperator = 'none';
-//             calcState.decimal = 'false';
-//             calcState.clean = 'true';
-//     }
-// }
 
 // adds event listener to the keys
 function generateEventListeners() {

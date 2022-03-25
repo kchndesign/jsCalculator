@@ -9,6 +9,7 @@ let numberOnly = '320';
 let numbersAndLetters = '2h23×9f0';
 let emptyString = '';
 let multipleOperators = '320-÷200';
+let negativeAtFront = '-320+200';
 
 describe('convertToNumbers() function', () => {
     test('should return defined output', () => {
@@ -40,7 +41,9 @@ describe('convertToNumbers() function', () => {
     });
 
     test('should return an array with valid input', () => {
-        expect(Array.isArray(convertToNumbers(validString))).toBe(true);
+        expect(Array.isArray(convertToNumbers(validString))).toBe(
+            true,
+        );
     });
 
     test('should return the correct value with valid input', () => {
@@ -73,6 +76,14 @@ describe('convertToNumbers() function', () => {
         expect(convertToNumbers(hangingOperator)).toStrictEqual([
             320,
             'times',
+            200,
+        ]);
+    });
+
+    test('should return negative number when negative operator at the front', () => {
+        expect(convertToNumbers(negativeAtFront)).toStrictEqual([
+            -320,
+            'plus',
             200,
         ]);
     });

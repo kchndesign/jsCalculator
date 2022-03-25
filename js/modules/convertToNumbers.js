@@ -16,7 +16,10 @@ const convertToNumbers2 = (string) => {
         } else if (parseInt(item) >= 0 && lastCharType === 'number') {
             numOpArr[numOpIndex] += item;
             lastCharType = 'number';
-        } else if (parseInt(item) >= 0 && lastCharType === 'operator') {
+        } else if (
+            parseInt(item) >= 0 &&
+            lastCharType === 'operator'
+        ) {
             numOpArr[++numOpIndex] = item;
             lastCharType = 'number';
         } else if (operator.test(item) && lastCharType === 'number') {
@@ -47,6 +50,16 @@ const convertToNumbers2 = (string) => {
     let lastItem = numOpArr.pop();
     if (parseFloat(lastItem)) {
         numOpArr.push(lastItem);
+    }
+
+    // if minus at the front,
+    let firstItem = numOpArr.shift();
+    switch (typeof firstItem) {
+        case 'number':
+            mappedArray.unshift(firstItem);
+            break;
+        case 'string':
+            break;
     }
 
     // throw if empty string
@@ -83,16 +96,10 @@ const convertToNumbers = (string) => {
 
     let arr = string.split(isOperator);
 
-    // take any operator off the back
-    let lastItem = arr.pop();
-    if (parseFloat(lastItem)) {
-        arr.push(lastItem);
-    }
-
     // keep track of multiple operators in a row
     let prevItem = 'number';
 
-    return arr.map((item) => {
+    let mappedArray = arr.map((item, index, arr) => {
         if (!parseFloat(item) && prevItem == 'number') {
             switch (item) {
                 case '×':
@@ -110,9 +117,35 @@ const convertToNumbers = (string) => {
             }
         } else if (parseFloat(item)) {
             prevItem = 'number';
-            return parseFloat(item);
+            if (index == 1 && arr[0] == '-') {
+                return parseFloat(-item);
+            } else {
+                return parseFloat(item);
+            }
         } else throw 'invalid input';
     });
+
+    // take any operator off the front
+    let firstItem = mappedArray.shift();
+    switch (typeof firstItem) {
+        case 'number':
+            mappedArray.unshift(firstItem);
+            break;
+        case 'string':
+            break;
+    }
+
+    // take any operator off the back
+    let lastItem = mappedArray.pop();
+    switch (typeof lastItem) {
+        case 'number':
+            mappedArray.push(lastItem);
+            break;
+        case 'string':
+            break;
+    }
+
+    return mappedArray;
 };
 
 export { convertToNumbers };
