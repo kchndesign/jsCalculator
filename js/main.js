@@ -47,6 +47,7 @@ let calcState = {
     hasPreviousResult: false,
     isOnly0: true,
     hasDecimal: false,
+
     getCalcState: function () {
         const lineArr = document.querySelectorAll('.display__text');
         const firstLineContent = lineArr[0].textContent;
@@ -64,17 +65,17 @@ let calcState = {
         // hasDecimal
         for (let i = lastLineCharacterArray.length - 1; i >= 0; i--) {
             let character = lastLineCharacterArray[i];
-            if (/[0-9.]/.test(character)) {
-                return;
+            if (/[0-9]/.test(character)) {
             } else if (/[×÷\-\+]/.test(character)) {
                 this.hasDecimal = false;
                 break;
-            } else if (/./.test(character)) {
+            } else if (/\./.test(character)) {
                 this.hasDecimal = true;
                 break;
             }
         }
     },
+
     [Symbol.iterator]: function* () {
         yield this.lastKeyIsOperator;
         yield this.hasPreviousResult;
@@ -95,6 +96,7 @@ let calcState = {
 function keyPress(event) {
     const keyText = event.target.textContent;
     const keyType = event.target.dataset.buttonType;
+    console.log([...calcState]);
 
     switch (keyType) {
         case 'operator':
