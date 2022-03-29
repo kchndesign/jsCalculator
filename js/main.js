@@ -101,9 +101,14 @@ function keyPress(event) {
 
     switch (keyType) {
         case 'operator':
-            // if calculator is in clean state: no previous result and no previous input dont allow input
+            // if calculator is in clean state: no previous result and no previous input,
+            // only allow minus sign
             if (!calcState.hasPreviousResult && calcState.isOnly0) {
-                break;
+                if (keyText === '-') {
+                    writeToScreen(keyText, true);
+                } else {
+                    break;
+                }
             }
             // if the last character is an operator, replace it
             // or if its just zero, you can replace it too
