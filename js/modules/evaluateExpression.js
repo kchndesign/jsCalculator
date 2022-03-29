@@ -61,7 +61,7 @@ const evaluateExpression = (inputArr) => {
         }
     });
 
-    return accumulator.toString();
+    return accumulator;
 };
 
 export { evaluateExpression };

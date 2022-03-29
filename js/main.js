@@ -4,6 +4,8 @@ import { getCurrentExpr } from './modules/getCurrentExpr.js';
 
 import { convertToNumbers } from './modules/convertToNumbers.js';
 
+import { maxPrecision } from './modules/maxPrecision.js';
+
 // get all of the reused elements
 const keys = document.querySelector('.calc__keys');
 const calc = document.querySelector('.calc');
@@ -96,7 +98,6 @@ let calcState = {
 function keyPress(event) {
     const keyText = event.target.textContent;
     const keyType = event.target.dataset.buttonType;
-    console.log([...calcState]);
 
     switch (keyType) {
         case 'operator':
@@ -152,7 +153,9 @@ function keyPress(event) {
                 console.log(operatorsArray);
                 let result = evaluateExpression(operatorsArray);
                 console.log(result);
-                writeToScreen(result, false, true);
+                let finalString = maxPrecision(result, 15);
+                console.log(finalString);
+                writeToScreen(finalString, false, true);
             } catch (error) {
                 console.error(error);
             }
