@@ -4,13 +4,11 @@ This project is a simple calculator written in vanilla Javascript. It
 has a 'neuemorphic' style interface made with HTML/SCSS. It takes some
 design inspiration from the Teenage Engineering OP-1.
 
-<!-- You can find this hosted at kchn.com.au/jscalculator -->
+## **You can find this hosted at [kchn.com.au/jsCalculator](https://kchn.com.au/jsCalculator)**
 
 ![Screenshot of the calculator.](./README-images/calculator-screenshot.png)
 
 ## **Contents**
-
--   ## [Currently Implementing](#currently-implementing-1)
 
 -   ## [Project Brief](#project-brief-1)
 
