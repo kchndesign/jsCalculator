@@ -12,7 +12,9 @@ describe('evaluateExpression() function', () => {
     });
 
     test('should return a string from a valid input', () => {
-        expect(typeof evaluateExpression(validArray)).toEqual('string');
+        expect(typeof evaluateExpression(validArray)).toEqual(
+            'number',
+        );
     });
 
     test('should throw upon empty array', () => {
@@ -37,6 +39,6 @@ describe('evaluateExpression() function', () => {
     });
 
     test('should return the correct result', () => {
-        expect(evaluateExpression(validArray)).toEqual('56120');
+        expect(evaluateExpression(validArray)).toEqual(56120);
     });
 });

@@ -10,6 +10,8 @@ design inspiration from the Teenage Engineering OP-1.
 
 ## **Contents**
 
+-   ## [Currently Implementing](#currently-implementing-1)
+
 -   ## [Project Brief](#project-brief-1)
 
 -   ## [Design](#design-1)
@@ -91,7 +93,7 @@ The javascript files were structured like so:
 
 **Writing and using unit tests**
 
-There were three pure functions in this application, all related to
+There were four pure functions in this application, all related to
 processing the inputs and parsing them as math operations. They were
 each designed while writing the unit tests to make sure that they
 received and returned the proper data and sanitised their inputs when
@@ -101,11 +103,10 @@ When coding them, they were tested until they satisfied all the tests.
 
 **Using element.dataset for interaction logic**
 
-I ended up using data attributes to help program the core logic of the
-program. This allowed me to only add one event listener to the
-container of all the buttons. I then used a combination of states
-stored in the parent div as data attributes as well as on each button
-to lay out the logic tree of the interaction
+I originally used data attributes to help program the core logic of
+the program. I used a combination of states stored in the parent div
+as data attributes as well as on each button to lay out the logic tree
+of the interaction
 
     data-current-operator:
         none: no current operator
@@ -121,6 +122,27 @@ to lay out the logic tree of the interaction
         accept certain inputs e.g reject
         operator presses when there is no
         previous result.
+
+I found that having to manually manage the state of the calculator
+after ever event was too difficult to keep track of, and made my code
+too hard to read.
+
+**Interaction logic using a stateful object**
+
+My solution to this was to use a single object that had the necessary
+states as properties. This object also had a method called
+`getCalcState()` that would go through all the necessary DOM
+interactions to update itself to reflect the proper state of the
+calculator.
+
+In the event handler, I called this method after processing every
+event so the state will be ready for the next event. I was anxious
+that performing intensive DOM interactions every click might introduce
+some lag, so I only updated after all of the event operations were
+handled.
+
+I realise now that I could have used the `get` functionality so that
+only the properties that were looked up were updated.
 
 **Using element.textContent for displaying and processing inputs**
 
@@ -172,6 +194,15 @@ that I passed onto the first function:
         num = 10;
         // we then do this:
         accumulator = accumulator + 10;
+
+4.  The fourth function takes the result and formats it for the
+    display of the calculator. It takes two numbers, the first one is
+    the number to be formatted and the second one is how many digits
+    it should be formatted to. If the length of the number is less
+    than the digits specified, it will just return the number as a
+    string. If the number is too long, it will use
+    `Number.toPrecision()` to format the number into scientific
+    notation so it will fit the calculator.
 
 ### Thoughts
 

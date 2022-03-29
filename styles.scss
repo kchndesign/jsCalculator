@@ -32,6 +32,9 @@ body {
         padding: 30px;
         background-color: $display-color;
 
+        max-width: $width;
+        overflow: hidden;
+
         display: flex;
         flex-direction: column;
         align-items: flex-end;
