@@ -13,8 +13,7 @@ const display = document.querySelector('.calc__display');
 
 // write to screen
 // get array of existing texts
-// if newline = false overrite bottom text
-// if newline = true move everything up and new bottom text
+// if newline = true: write string to the top and replace the bottom text with 0
 // if replace = true, replace the last letter in the last line
 // replace not designed to be used with newline
 function writeToScreen(string, replace = false, newline = false) {
@@ -77,7 +76,7 @@ let calcState = {
             }
         }
     },
-
+  
     [Symbol.iterator]: function* () {
         yield this.lastKeyIsOperator;
         yield this.hasPreviousResult;
